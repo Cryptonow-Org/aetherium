@@ -2819,7 +2819,7 @@ namespace cryptonote
     typedef epee::misc_utils::struct_init<response_t> response;
   };
 
-}
+} // cryptonote
 
 namespace wire
 {
