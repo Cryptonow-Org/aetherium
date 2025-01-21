@@ -44,7 +44,8 @@ namespace epee
 {
 
   template<class t_child_class, class t_connection_context = epee::net_utils::connection_context_base>
-  class http_server_impl_base: public net_utils::http::i_http_server_handler<t_connection_context>
+  class http_server_impl_base: public net_utils::http::i_http_server_handler<t_connection_context>,
+                                      net_utils::i_connection_limit
   {
 
   public:
@@ -60,7 +61,8 @@ namespace epee
       const std::string& bind_ipv6_address = "::", bool use_ipv6 = false, bool require_ipv4 = true,
       std::vector<std::string> access_control_origins = std::vector<std::string>(),
       boost::optional<net_utils::http::login> user = boost::none,
-      net_utils::ssl_options_t ssl_options = net_utils::ssl_support_t::e_ssl_support_autodetect)
+      net_utils::ssl_options_t ssl_options = net_utils::ssl_support_t::e_ssl_support_autodetect,
+      const std::size_t max_ip_connections = 3, const std::size_t response_soft_limit = 0)
     {
 
       //set self as callback handler
@@ -75,6 +77,9 @@ namespace epee
       m_net_server.get_config_object().m_access_control_origins = std::move(access_control_origins);
 
       m_net_server.get_config_object().m_user = std::move(user);
+      m_net_server.get_config_object().m_max_connections = max_ip_connections;
+      m_net_server.set_response_soft_limit(response_soft_limit);
+      m_net_server.set_connection_limit(this);
 
       MGINFO("Binding on " << bind_ip << " (IPv4):" << bind_port);
       if (use_ipv6)
@@ -131,6 +136,17 @@ namespace epee
     }
 
   protected: 
+
+    virtual bool is_host_limit(const net_utils::network_address& na) override final
+    {
+      auto& config = m_net_server.get_config_object();
+      CRITICAL_REGION_LOCAL(config.m_lock);
+      const auto elem = config.m_connections.find(na.host_str());
+      if (elem != config.m_connections.end())
+        return config.m_max_connections <= elem->second;
+      return false;
+    }
+
     net_utils::boosted_tcp_server<net_utils::http::http_custom_handler<t_connection_context> > m_net_server;
   };
 }

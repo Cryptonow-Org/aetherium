@@ -129,6 +129,8 @@ namespace
   const command_line::arg_descriptor<std::string> arg_wallet_dir = {"wallet-dir", "Directory for newly created wallets"};
   const command_line::arg_descriptor<bool> arg_prompt_for_password = {"prompt-for-password", "Prompts for password when not provided", false};
   const command_line::arg_descriptor<bool> arg_no_initial_sync = {"no-initial-sync", "Skips the initial sync before listening for connections", false};
+  const command_line::arg_descriptor<std::size_t> arg_rpc_max_ip_connections = {"rpc-max-ip-connections", "Max RPC connections per IP permitted", 3};
+  const command_line::arg_descriptor<std::size_t> arg_rpc_response_soft_limit = {"rpc-response-soft-limit", "Max response bytes that can be queued, enforced at next response attempt", 25 * 1024 * 1024};
 
   constexpr const char default_rpc_username[] = "monero";
 
@@ -331,7 +333,8 @@ namespace tools
       rng, std::move(bind_port), std::move(rpc_config->bind_ip),
       std::move(rpc_config->bind_ipv6_address), std::move(rpc_config->use_ipv6), std::move(rpc_config->require_ipv4),
       std::move(rpc_config->access_control_origins), std::move(http_login),
-      std::move(rpc_config->ssl_options)
+      std::move(rpc_config->ssl_options),
+      command_line::get_arg(vm, arg_rpc_max_ip_connections)
     );
   }
   //------------------------------------------------------------------------------------------------------------------------------
@@ -4974,6 +4977,7 @@ int main(int argc, char** argv) {
   command_line::add_arg(desc_params, arg_wallet_dir);
   command_line::add_arg(desc_params, arg_prompt_for_password);
   command_line::add_arg(desc_params, arg_no_initial_sync);
+  command_line::add_arg(desc_params, arg_rpc_max_ip_connections);
   command_line::add_arg(hidden_options, daemonizer::arg_non_interactive);
 
   daemonizer::init_options(hidden_options, desc_params);
