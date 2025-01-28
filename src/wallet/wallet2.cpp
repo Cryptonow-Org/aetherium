@@ -14989,19 +14989,6 @@ std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &pay
     }
   }
 
-  // we want only one payment id
-  if (info.has_payment_id && !payment_id.empty())
-  {
-    error = "A single payment id is allowed";
-    return std::string();
-  }
-
-  if (!payment_id.empty())
-  {
-    error = "Standalone payment id deprecated, use integrated address instead";
-    return std::string();
-  }
-
   std::string uri = "monero:" + addresses;
   unsigned int n_fields = 0;
 
