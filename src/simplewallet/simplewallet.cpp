@@ -6561,7 +6561,6 @@ bool simple_wallet::transfer_main(const std::vector<std::string> &args_, bool ca
         de.addr = info.address;
         de.is_subaddress = info.is_subaddress;
         de.is_integrated = info.has_payment_id;
-        // num_subaddresses += info.is_subaddress;
 
         if (info.has_payment_id || !payment_id_uri.empty())
         {
