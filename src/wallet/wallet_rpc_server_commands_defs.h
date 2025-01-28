@@ -1833,9 +1833,7 @@ namespace wallet_rpc
 
     BEGIN_KV_SERIALIZE_MAP()
       KV_SERIALIZE(address)
-      KV_SERIALIZE(payment_id)
       KV_SERIALIZE(amount)
-      KV_SERIALIZE(tx_description)
       KV_SERIALIZE(recipient_name)
     END_KV_SERIALIZE_MAP()
   };
@@ -1852,7 +1850,6 @@ namespace wallet_rpc
       KV_SERIALIZE(payment_id);
     END_KV_SERIALIZE_MAP()
   };
-
 
   struct COMMAND_RPC_MAKE_URI
   {
