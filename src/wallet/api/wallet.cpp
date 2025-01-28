@@ -2550,7 +2550,19 @@ bool WalletImpl::checkBackgroundSync(const std::string &message) const
 
 bool WalletImpl::parse_uri(const std::string &uri, std::string &address, std::string &payment_id, uint64_t &amount, std::string &tx_description, std::string &recipient_name, std::vector<std::string> &unknown_parameters, std::string &error)
 {
-    return m_wallet->parse_uri(uri, address, payment_id, amount, tx_description, recipient_name, unknown_parameters, error);
+    std::vector<tools::wallet2::uri_data> data;
+    if (!m_wallet->parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error)) {
+      setStatusError(tr("Failed to parse uri"));
+      return false;
+    }
+    if (data.size() > 1) {
+      setStatusError(tr("Multi-recipient URIs currently unsupported"));
+      return false;
+    }
+    address = data[0].address;
+    amount = data[0].amount;
+    recipient_name = data[0].recipient_name;
+    return true;
 }
 
 std::string WalletImpl::make_uri(const std::string &address, const std::string &payment_id, uint64_t amount, const std::string &tx_description, const std::string &recipient_name, std::string &error) const
