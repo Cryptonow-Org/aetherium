@@ -15144,72 +15144,24 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
   return true;
 }
 
-bool wallet2::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& description, std::string& recipient_name, std::unordered_map<std::string, std::string>& unknown_parameters, std::string& error)
+bool wallet2::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& description, std::string& recipient_name, std::vector<std::string>& unknown_parameters, std::string& error)
 {
-    if (uri.substr(0, 7) != "monero:") {
-        error = std::string("URI has wrong scheme (expected \"monero:\"): ") + uri;
-        return false;
-    }
+  std::vector<tools::wallet2::uri_data> data;
+  if (!parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error))
+  {
+    error = "Failed to parse uri";
+    return false;
+  }
+  if (data.size() > 1)
+  {
+    error = "Multi-recipient URIs currently unsupported";
+    return false;
+  }
+  address = data[0].address;
+  amount = data[0].amount;
+  recipient_name = data[0].recipient_name;
 
-    std::string remainder = uri.substr(7);
-    const char* ptr = strchr(remainder.c_str(), '?');
-    std::string address_string = ptr ? remainder.substr(0, ptr - remainder.c_str()) : remainder;
-
-    cryptonote::address_parse_info info;
-    if (!get_account_address_from_str(info, nettype(), address_string)) {
-        error = std::string("URI contains improper address: ") + address_string;
-        return false;
-    }
-
-    // Assign the parsed address
-    address = address_string;
-
-    if (ptr == nullptr) { // No parameters to process
-        return true;
-    }
-
-    std::string params(ptr + 1);
-    std::vector<std::string> arguments;
-    boost::split(arguments, params, boost::is_any_of("&"));
-    std::set<std::string> have_arg;
-
-    amount = 0; // Default amount
-    for (const std::string& arg : arguments) {
-        std::vector<std::string> kv;
-        boost::split(kv, arg, boost::is_any_of("="));
-        if (kv.size() != 2) {
-            error = std::string("URI has wrong parameter: ") + arg;
-            return false;
-        }
-
-        if (have_arg.find(kv[0]) != have_arg.end()) {
-            error = std::string("URI has more than one instance of ") + kv[0];
-            return false;
-        }
-        have_arg.insert(kv[0]);
-
-        if (kv[0] == "tx_amount") {
-            if (!cryptonote::parse_amount(amount, kv[1])) {
-                error = std::string("URI has invalid amount: ") + kv[1];
-                return false;
-            }
-        } else if (kv[0] == "tx_payment_id") {
-            crypto::hash hash;
-            if (!wallet2::parse_long_payment_id(kv[1], hash)) {
-                error = "Invalid payment ID: " + kv[1];
-                return false;
-            }
-            payment_id = kv[1];
-        } else if (kv[0] == "recipient_name") {
-            recipient_name = epee::net_utils::convert_from_url_format(kv[1]);
-        } else if (kv[0] == "tx_description") {
-            description = epee::net_utils::convert_from_url_format(kv[1]);
-        } else {
-            unknown_parameters[kv[0]] = kv[1];
-        }
-    }
-
-    return true;
+  return true;
 }
 //----------------------------------------------------------------------------------------------------
 uint64_t wallet2::get_blockchain_height_by_date(uint16_t year, uint8_t month, uint8_t day)
