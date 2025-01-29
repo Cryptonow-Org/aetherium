@@ -15144,7 +15144,7 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
   return true;
 }
 
-bool wallet2::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& description, std::string& recipient_name, std::vector<std::string>& unknown_parameters, std::string& error)
+bool wallet2::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& tx_description, std::string& recipient_name, std::vector<std::string>& unknown_parameters, std::string& error)
 {
   std::vector<tools::wallet2::uri_data> data;
   if (!parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error))
