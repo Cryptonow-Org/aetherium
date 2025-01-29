@@ -14992,11 +14992,6 @@ std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &pay
   std::string uri = "monero:" + addresses;
   unsigned int n_fields = 0;
 
-  if (!payment_id.empty())
-  {
-    uri += (n_fields++ ? "&" : "?") + std::string("tx_payment_id=") + payment_id;
-  }
-
   if (amounts_used)
   {
     // URI encoded amount is in decimal units, not atomic units
@@ -15147,6 +15142,10 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
   }
 
   return true;
+}
+}
+bool wallet2::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& description, std::string& recipient_name, std::unordered_map<std::string, std::string>& unknown_parameters, std::string& error) {
+    return parse_uri(uri, address, payment_id, amount, description, error);
 }
 //----------------------------------------------------------------------------------------------------
 uint64_t wallet2::get_blockchain_height_by_date(uint16_t year, uint8_t month, uint8_t day)

@@ -2565,66 +2565,10 @@ bool WalletImpl::parse_uri(const std::string &uri, std::string &address, std::st
     return true;
 }
 
-std::string WalletImpl::make_uri(std::vector<uri_data> data, const std::string &payment_id, const std::string &tx_description, std::string &error) const
-{
-    return m_wallet->make_uri(data, payment_id, tx_description, error);
-}
-
 std::string WalletImpl::make_uri(const std::string &address, const std::string &payment_id, uint64_t amount, const std::string &tx_description, const std::string &recipient_name, std::string &error) const
 {
-    // from wallet2.h - improve
-    struct uri_data
-    {
-        std::string address;
-        uint64_t amount;
-        std::string recipient_name;
-    } entry;
-    entry.address = address;
-    entry.amount = amount;
-    entry.recipient_name = recipient_name;
-
-    std::vector<uri_data> data;
-    data.push_back(entry);
-
-    return m_wallet->make_uri(data, payment_id, tx_description, error);
+    return m_wallet->make_uri(address, payment_id, amount, tx_description, recipient_name, error);
 }
-
-std::string WalletImpl::make_uri(const std::string &address, const std::string &payment_id, uint64_t amount, const std::string &tx_description, const std::string &recipient_name, const std::vector<std::string> &unknown_parameters, std::string &error) const
-{
-    struct uri_data
-    {
-        std::string address;
-        uint64_t amount;
-        std::string recipient_name;
-    } entry;
-    entry.address = address;
-    entry.amount = amount;
-    entry.recipient_name = recipient_name;
-
-    std::vector<uri_data> data;
-    data.push_back(entry);
-
-    std::string base_uri = m_wallet->make_uri(data, payment_id, tx_description, error);
-    if (base_uri.empty())
-    {
-        return std::string();
-    }
-
-    std::string extended_uri = base_uri;
-    for (const auto &param : unknown_parameters)
-    {
-        if (extended_uri.find('?') == std::string::npos)
-        {
-            extended_uri += "?";
-        } else {
-            extended_uri += "&";
-        }
-        extended_uri += param;
-    }
-
-    return extended_uri;
-}
-
 
 std::string WalletImpl::getDefaultDataDir() const
 {
