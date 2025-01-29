@@ -15147,14 +15147,14 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
 bool wallet2::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& description, std::string& recipient_name, std::unordered_map<std::string, std::string>& unknown_parameters, std::string& error)
 {
   std::vector<tools::wallet2::uri_data> data;
-  if (!m_wallet->parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error))
+  if (!parse_uri(uri, data, payment_id, "", unknown_parameters, error))
   {
-    setStatusError(tr("Failed to parse uri"));
+    throw std::runtime_error("failed to parse URI" + uri)
     return false;
   }
   if (data.size() > 1)
   {
-    setStatusError(tr("Multi-recipient URIs currently unsupported"));
+    throw std::runtime_error("multi-recipient URIs currently unsupported")
     return false;
   }
     address = data[0].address;
