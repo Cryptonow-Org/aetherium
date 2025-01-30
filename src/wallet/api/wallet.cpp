@@ -2577,7 +2577,7 @@ std::string WalletImpl::make_uri(const std::string &address, const std::string &
     std::vector<tools::wallet2::uri_data> data;
     data.push_back(entry);
 
-    return make_uri(data, payment_id, tx_description, error);
+    return m_wallet->make_uri(data, payment_id, tx_description, error);
 }
 
 std::string WalletImpl::getDefaultDataDir() const
