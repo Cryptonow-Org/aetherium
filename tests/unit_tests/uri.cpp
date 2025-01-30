@@ -41,6 +41,14 @@
   bool ret = w.parse_uri(uri, address, payment_id, amount, description, recipient_name, unknown_parameters, error); \
   ASSERT_EQ(ret, expected);
 
+#define PARSE_URI_MULTI(uri, expected) \
+  std::vector<tools::wallet2::uri_data> data; \
+  std::string payment_id, description, error; \
+  std::vector<std::string> unknown_parameters; \
+  tools::wallet2 w(cryptonote::TESTNET); \
+  bool ret = w.parse_uri(uri, data, payment_id, description, unknown_parameters, error); \
+  ASSERT_EQ(ret, expected);
+
 TEST(uri, empty_string)
 {
   PARSE_URI("", false);
@@ -213,78 +221,95 @@ TEST(uri, url_encoded_once)
   ASSERT_EQ(description, "foo 20");
 }
 
+
 TEST(uri, multiple_addresses_no_params)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS, true);
-  ASSERT_EQ(address, TEST_ADDRESS);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS, true);
+  ASSERT_EQ(data.size(), 2);
+  ASSERT_EQ(data[0].address, TEST_ADDRESS);
+  ASSERT_EQ(data[1].address, TEST_ADDRESS);
 }
 
 TEST(uri, multiple_addresses_with_amounts)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;200000000000", true);
-  ASSERT_EQ(address, TEST_ADDRESS);
-  ASSERT_EQ(amount, 500000000000);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;200000000000", true);
+  ASSERT_EQ(data.size(), 2);
+  ASSERT_EQ(data[0].address, TEST_ADDRESS);
+  ASSERT_EQ(data[0].amount, 500000000000);
+  ASSERT_EQ(data[1].address, TEST_ADDRESS);
+  ASSERT_EQ(data[1].amount, 200000000000);
 }
 
 TEST(uri, multiple_addresses_with_recipient_names)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?recipient_name=Alice;Bob", true);
-  ASSERT_EQ(address, TEST_ADDRESS);
-  ASSERT_EQ(recipient_name, "Alice");
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?recipient_name=Alice;Bob", true);
+  ASSERT_EQ(data.size(), 2);
+  ASSERT_EQ(data[0].address, TEST_ADDRESS);
+  ASSERT_EQ(data[0].recipient_name, "Alice");
+  ASSERT_EQ(data[1].address, TEST_ADDRESS);
+  ASSERT_EQ(data[1].recipient_name, "Bob");
 }
 
 TEST(uri, multiple_addresses_with_mismatched_amounts)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000", false);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000", false);
 }
 
 TEST(uri, multiple_addresses_with_mismatched_recipient_names)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?recipient_name=Alice", false);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?recipient_name=Alice", false);
 }
 
 TEST(uri, multiple_addresses_with_partial_params)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;0&recipient_name=Alice;", true);
-  ASSERT_EQ(address, TEST_ADDRESS);
-  ASSERT_EQ(amount, 500000000000);
-  ASSERT_EQ(recipient_name, "Alice");
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;0&recipient_name=Alice;", true);
+  ASSERT_EQ(data.size(), 2);
+  ASSERT_EQ(data[0].address, TEST_ADDRESS);
+  ASSERT_EQ(data[0].amount, 500000000000);
+  ASSERT_EQ(data[0].recipient_name, "Alice");
+  ASSERT_EQ(data[1].address, TEST_ADDRESS);
+  ASSERT_EQ(data[1].amount, 0);
+  ASSERT_EQ(data[1].recipient_name, "");
 }
 
 TEST(uri, multiple_addresses_with_unknown_params)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?unknown_param=123;456", true);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?unknown_param=123;456", true);
   ASSERT_EQ(unknown_parameters.size(), 1);
   ASSERT_EQ(unknown_parameters[0], "unknown_param=123;456");
 }
 
 TEST(uri, multiple_addresses_with_payment_id)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_payment_id=1234567890123456789012345678901234567890123456789012345678901234", true);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_payment_id=1234567890123456789012345678901234567890123456789012345678901234", true);
   ASSERT_EQ(payment_id, "1234567890123456789012345678901234567890123456789012345678901234");
 }
 
 TEST(uri, multiple_addresses_with_invalid_payment_id)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_payment_id=123456", false);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_payment_id=123456", false);
 }
 
 TEST(uri, multiple_addresses_with_description)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_description=Payment%20for%20services", true);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_description=Payment%20for%20services", true);
   ASSERT_EQ(description, "Payment for services");
 }
 
 TEST(uri, multiple_addresses_mismatched_params)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000&recipient_name=Alice", false);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000&recipient_name=Alice", false);
 }
 
 TEST(uri, multiple_addresses_all_params_correct)
 {
-  PARSE_URI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;200000000000&recipient_name=Alice;Bob&tx_description=Payment%20for%20services", true);
-  ASSERT_EQ(address, TEST_ADDRESS);
-  ASSERT_EQ(amount, 500000000000);
-  ASSERT_EQ(recipient_name, "Alice");
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;200000000000&recipient_name=Alice;Bob&tx_description=Payment%20for%20services", true);
+  ASSERT_EQ(data.size(), 2);
+  ASSERT_EQ(data[0].address, TEST_ADDRESS);
+  ASSERT_EQ(data[0].amount, 500000000000);
+  ASSERT_EQ(data[0].recipient_name, "Alice");
+  ASSERT_EQ(data[1].address, TEST_ADDRESS);
+  ASSERT_EQ(data[1].amount, 200000000000);
+  ASSERT_EQ(data[1].recipient_name, "Bob");
   ASSERT_EQ(description, "Payment for services");
 }

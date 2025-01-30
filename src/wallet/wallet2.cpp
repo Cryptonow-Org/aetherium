@@ -14944,12 +14944,17 @@ std::string wallet2::decrypt_with_view_secret_key(const std::string &ciphertext,
 //----------------------------------------------------------------------------------------------------
 std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &payment_id, const std::string &tx_description, std::string &error) const
 {
+  if (data.empty())
+  {
+    error = "No recipient data provided.";
+    return std::string();
+  }
   std::string addresses = "";
   std::string amounts = "";
   bool amounts_used = false;
   std::string recipients = "";
   bool recipients_used = false;
-  for (uri_data entry : data)
+  for (const uri_data& entry : data)
   {
     cryptonote::address_parse_info info;
     if(!get_account_address_from_str(info, nettype(), entry.address))
@@ -15036,8 +15041,15 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
   std::vector<std::string> addresses, recipient_names;
   std::vector<uint64_t> amounts;
   boost::split(addresses, addresses_string, boost::is_any_of(";"));
+  addresses.erase(std::remove(addresses.begin(), addresses.end(), ""), addresses.end());
 
-  for (const std::string &address : addresses)
+  if (addresses.empty())
+  {
+    error = "No addresses specified in URI.";
+    return false;
+  }
+
+  for (const std::string& address : addresses)
   {
     cryptonote::address_parse_info info;
     if(!get_account_address_from_str(info, nettype(), address))
@@ -15128,7 +15140,6 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
     error = "Incorrect amount count. If an amount is assigned there should be an entry for each recipient. zero may be use as a filler";
     return false;
   }
-
   for(size_t i = 0; i < data.size(); i++)
   {
     if (!amounts.empty())
@@ -15140,10 +15151,9 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
       data[i].recipient_name = recipient_names[i];
     }
   }
-
   return true;
 }
-
+//----------------------------------------------------------------------------------------------------
 bool wallet2::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& tx_description, std::string& recipient_name, std::vector<std::string>& unknown_parameters, std::string& error)
 {
   std::vector<tools::wallet2::uri_data> data;
