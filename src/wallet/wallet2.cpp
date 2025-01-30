@@ -14972,7 +14972,7 @@ std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &pay
       addresses += ";";
     }
     addresses += entry.address;
-    
+
     if (!amounts.empty())
     {
       amounts += ";";
@@ -15090,6 +15090,16 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
     {
       std::vector<std::string> amounts_split;
       boost::split(amounts_split, kv[1], boost::is_any_of(";"));
+      size_t expected_size = addresses.size();
+      
+      // enforce parameter consistency
+      if (amounts_split.size() != expected_size)
+      {
+        error = "Incorrect tx_amount count";
+        return false;
+      }
+
+
       for (size_t i = 0; i < amounts_split.size(); i++)
       {
         uint64_t amount;
@@ -15115,6 +15125,15 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
     {
       std::vector<std::string> names_split;
       boost::split(names_split, kv[1], boost::is_any_of(";"));
+      size_t expected_size = addresses.size();
+
+      // enforce parameter consistency
+      if (names_split.size() != expected_size)
+      {
+        error = "Incorrect recipient_name count";
+        return false;
+      }
+
       for (size_t i = 0; i < names_split.size(); i++)
       {
         recipient_names.push_back(epee::net_utils::convert_from_url_format(names_split[i]));
@@ -15132,12 +15151,12 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
 
   if (!recipient_names.empty() && recipient_names.size() != addresses.size())
   {
-    error = "Incorrect recipient name count. If a recipient name is assigned there should be an entry for each recipient.";
+    error = "Incorrect recipient name count. Recipient name count must match address count";
     return false;
   }
   if (!amounts.empty() && amounts.size() != addresses.size())
   {
-    error = "Incorrect amount count. If an amount is assigned there should be an entry for each recipient. zero may be use as a filler";
+    error = "Incorrect amount count. Amount count must match address count. Zero may be use as a filler";
     return false;
   }
   for(size_t i = 0; i < data.size(); i++)

@@ -232,7 +232,7 @@ TEST(uri, multiple_addresses_no_params)
 
 TEST(uri, multiple_addresses_with_amounts)
 {
-  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;200000000000", true);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=0.5;0.2", true);
   ASSERT_EQ(data.size(), 2);
   ASSERT_EQ(data[0].address, TEST_ADDRESS);
   ASSERT_EQ(data[0].amount, 500000000000);
@@ -252,7 +252,7 @@ TEST(uri, multiple_addresses_with_recipient_names)
 
 TEST(uri, multiple_addresses_with_mismatched_amounts)
 {
-  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000", false);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=0.5", false);
 }
 
 TEST(uri, multiple_addresses_with_mismatched_recipient_names)
@@ -262,7 +262,7 @@ TEST(uri, multiple_addresses_with_mismatched_recipient_names)
 
 TEST(uri, multiple_addresses_with_partial_params)
 {
-  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;0&recipient_name=Alice;", true);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=0.5;0&recipient_name=Alice;", true);
   ASSERT_EQ(data.size(), 2);
   ASSERT_EQ(data[0].address, TEST_ADDRESS);
   ASSERT_EQ(data[0].amount, 500000000000);
@@ -298,12 +298,12 @@ TEST(uri, multiple_addresses_with_description)
 
 TEST(uri, multiple_addresses_mismatched_params)
 {
-  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000&recipient_name=Alice", false);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=0.5&recipient_name=Alice", false);
 }
 
 TEST(uri, multiple_addresses_all_params_correct)
 {
-  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=500000000000;200000000000&recipient_name=Alice;Bob&tx_description=Payment%20for%20services", true);
+  PARSE_URI_MULTI("monero:" TEST_ADDRESS ";" TEST_ADDRESS "?tx_amount=0.5;0.2&recipient_name=Alice;Bob&tx_description=Payment%20for%20services", true);
   ASSERT_EQ(data.size(), 2);
   ASSERT_EQ(data[0].address, TEST_ADDRESS);
   ASSERT_EQ(data[0].amount, 500000000000);
