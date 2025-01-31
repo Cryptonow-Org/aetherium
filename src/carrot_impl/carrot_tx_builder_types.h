@@ -1,4 +1,4 @@
-// Copyright (c) 2022-2024, The Monero Project
+// Copyright (c) 2024, The Monero Project
 // 
 // All rights reserved.
 // 
@@ -28,23 +28,38 @@
 
 #pragma once
 
-extern "C"
+//local headers
+#include "carrot_core/payment_proposal.h"
+#include "crypto/crypto.h"
+#include "ringct/rctTypes.h"
+
+//third party headers
+#include <boost/multiprecision/cpp_int.hpp>
+
+//standard headers
+#include <functional>
+#include <map>
+
+//forward declarations
+
+namespace carrot
 {
-#include "crypto-ops.h"
-}
-#include "crypto.h"
-
-namespace crypto
+struct CarrotSelectedInput
 {
+    rct::xmr_amount amount;
+    crypto::key_image key_image;
+};
 
-public_key get_G();
-public_key get_H();
-public_key get_T();
-ge_p3 get_G_p3();
-ge_p3 get_H_p3();
-ge_p3 get_T_p3();
-ge_cached get_G_cached();
-ge_cached get_H_cached();
-ge_cached get_T_cached();
+using select_inputs_func_t = std::function<void(
+        const boost::multiprecision::int128_t&,        // nominal output sum, w/o fee
+        const std::map<std::size_t, rct::xmr_amount>&, // absolute fee per input count
+        std::vector<CarrotSelectedInput>&              // selected inputs result
+    )>;
 
-} //namespace crypto
+using carve_fees_and_balance_func_t = std::function<void(
+        const boost::multiprecision::int128_t&,       // input sum amount
+        const rct::xmr_amount,                        // fee
+        std::vector<CarrotPaymentProposalV1>&,        // normal payment proposals [inout]
+        std::vector<CarrotPaymentProposalSelfSendV1>& // selfsend payment proposals [inout]
+    )>;
+} //namespace carrot
