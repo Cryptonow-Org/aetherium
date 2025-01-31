@@ -987,21 +987,31 @@ class Wallet(object):
         }
         return self.rpc.send_json_rpc_request(get_attribute)
 
-    def make_uri(self, address = '', payment_id = '', amount = 0, tx_description = '', recipient_name = ''):
+    def make_uri(self, payments, payment_id='', tx_description=''):
         make_uri = {
             'method': 'make_uri',
             'jsonrpc': '2.0',
             'params': {
-                'address': address,
+                'payments': payments,
                 'payment_id': payment_id,
-                'amount': amount,
                 'tx_description': tx_description,
-                'recipient_name': recipient_name,
             },
             'id': '0'
         }
         return self.rpc.send_json_rpc_request(make_uri)
-
+    
+    def legacy_make_uri(self, address='', payment_id='', amount=0, tx_description='', recipient_name=''):
+        """For backward compatibility with single-payment URIs"""
+        return self.make_uri(
+            payments=[{
+                'address': address,
+                'amount': amount,
+                'recipient_name': recipient_name
+            }],
+            payment_id=payment_id,
+            tx_description=tx_description
+        )
+    
     def parse_uri(self, uri):
         parse_uri = {
             'method': 'parse_uri',
