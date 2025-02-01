@@ -6236,9 +6236,6 @@ std::string wallet2::make_background_keys_file_name(const std::string &wallet_fi
 //----------------------------------------------------------------------------------------------------
 bool wallet2::parse_long_payment_id(const std::string& payment_id_str, crypto::hash& payment_id)
 {
-    if (payment_id_str.size() != 64)
-    return false;
-    
   cryptonote::blobdata payment_id_data;
   if(!epee::string_tools::parse_hexstr_to_binbuff(payment_id_str, payment_id_data))
     return false;
@@ -15030,6 +15027,19 @@ std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &pay
   return uri;
 }
 //----------------------------------------------------------------------------------------------------
+std::string wallet2::make_uri(const std::string &address, const std::string &payment_id, uint64_t amount, const std::string &tx_description, const std::string &recipient_name, std::string &error) const
+{
+    tools::wallet2::uri_data entry;
+    entry.address = address;
+    entry.amount = amount;
+    entry.recipient_name = recipient_name;
+
+    std::vector<tools::wallet2::uri_data> data;
+    data.push_back(entry);
+
+    return make_uri(data, payment_id, tx_description, error);
+}
+//----------------------------------------------------------------------------------------------------
 bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std::string &payment_id, std::string &tx_description, std::vector<std::string> &unknown_parameters, std::string &error)
 {
   if (uri.substr(0, 7) != "monero:")
@@ -15117,6 +15127,11 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
     else if (kv[0] == "tx_payment_id")
     {
       // standalone payment ids are deprecated. use integrated address
+      error = "Standalone payment id deprecated, use integrated address instead";
+      return false;
+
+      /*
+      // Commenting this code to save for any unforeseen future use.
       crypto::hash hash;
       if (!wallet2::parse_long_payment_id(kv[1], hash))
       {
@@ -15124,6 +15139,7 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
         return false;
       }
       payment_id = kv[1];
+      */
     }
     else if (kv[0] == "recipient_name")
     {

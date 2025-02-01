@@ -2548,35 +2548,23 @@ bool WalletImpl::checkBackgroundSync(const std::string &message) const
     return false;
 }
 
-bool WalletImpl::parse_uri(const std::string &uri, std::string &address, std::string &payment_id, uint64_t &amount, std::string &tx_description, std::string &recipient_name, std::vector<std::string> &unknown_parameters, std::string &error)
+bool WalletImpl::parse_uri(const std::string &uri, std::vector<uri_data> &data, std::string &payment_id, std::string &tx_description, std::vector<std::string> &unknown_parameters, std::string &error)
 {
-    std::vector<tools::wallet2::uri_data> data;
-    if (!m_wallet->parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error))
-    {
-      setStatusError(tr("Failed to parse uri"));
-      return false;
-    }
-    if (data.size() > 1)
-    {
-      setStatusError(tr("Multi-recipient URIs currently unsupported"));
-      return false;
-    }
-    address = data[0].address;
-    amount = data[0].amount;
-    recipient_name = data[0].recipient_name;
-    return true;
+    return m_wallet->parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error)
+}
+
+bool WalletImpl::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& tx_description, std::string& recipient_name, std::vector<std::string>& unknown_parameters, std::string& error)
+{
+    return m_wallet->parse_uri(uri, address, payment_id, amount, tx_description, recipient_name, unknown_parameters, error);
 }
 
 std::string WalletImpl::make_uri(const std::string &address, const std::string &payment_id, uint64_t amount, const std::string &tx_description, const std::string &recipient_name, std::string &error) const
 {
-    tools::wallet2::uri_data entry;
-    entry.address = address;
-    entry.amount = amount;
-    entry.recipient_name = recipient_name;
+    return m_wallet->make_uri(address, payment_id, amount, tx_description, recipient_name, error);
+}
 
-    std::vector<tools::wallet2::uri_data> data;
-    data.push_back(entry);
-
+std::string WalletImpl::make_uri(std::vector<uri_data> data, const std::string &payment_id, const std::string &tx_description, std::string &error) const
+{
     return m_wallet->make_uri(data, payment_id, tx_description, error);
 }
 
