@@ -2548,7 +2548,7 @@ bool WalletImpl::checkBackgroundSync(const std::string &message) const
     return false;
 }
 
-bool WalletImpl::parse_uri(const std::string &uri, std::vector<uri_data> &data, std::string &payment_id, std::string &tx_description, std::vector<std::string> &unknown_parameters, std::string &error)
+bool WalletImpl::parse_uri(const std::string &uri, std::vector<tools::wallet2::uri_data> &data, std::string &payment_id, std::string &tx_description, std::vector<std::string> &unknown_parameters, std::string &error)
 {
     return m_wallet->parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error)
 }
@@ -2563,7 +2563,7 @@ std::string WalletImpl::make_uri(const std::string &address, const std::string &
     return m_wallet->make_uri(address, payment_id, amount, tx_description, recipient_name, error);
 }
 
-std::string WalletImpl::make_uri(std::vector<uri_data> data, const std::string &payment_id, const std::string &tx_description, std::string &error) const
+std::string WalletImpl::make_uri(std::vector<tools::wallet2::uri_data> data, const std::string &payment_id, const std::string &tx_description, std::string &error) const
 {
     return m_wallet->make_uri(data, payment_id, tx_description, error);
 }
