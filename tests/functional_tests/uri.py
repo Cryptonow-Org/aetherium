@@ -323,10 +323,5 @@ class URITest():
         # unknown parameters should be collected in the unknown_parameters list.
         assert parsed.unknown_parameters == ['foo=bar', 'baz=quux'], "Unknown parameters mismatch"
 
-
-
-
-
-
 if __name__ == '__main__':
     URITest().run_test()

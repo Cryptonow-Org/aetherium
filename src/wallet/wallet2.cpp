@@ -14962,9 +14962,9 @@ std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &pay
       error = std::string("wrong address: ") + entry.address;
       return std::string();
     }
-    if (!payment_id.empty())
+    if (info.has_payment_id && !payment_id.empty())
     {
-      error = "Standalone payment id deprecated, use integrated address instead";
+      error = "Separate payment id given with an integrated address";
       return std::string();
     }
     if (!addresses.empty())

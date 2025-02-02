@@ -3110,7 +3110,7 @@ namespace tools
     if (!m_wallet) return not_open(er);
     std::string error;
     std::vector<tools::wallet2::uri_data> data;
-    for (tools::wallet_rpc::uri_payment entry : req.payments)
+    for (tools::wallet_rpc::uri_payment &entry : req.payments)
     {
       tools::wallet2::uri_data entry_data;
       entry_data.address = entry.address;
@@ -3142,7 +3142,7 @@ namespace tools
       er.message = "Error parsing URI: " + error;
       return false;
     }
-    for (const tools::wallet2::uri_data entry : uri_data)
+    for (const tools::wallet2::uri_data &entry : uri_data)
     {
       tools::wallet_rpc::uri_payment entry_spec = {entry.address, entry.amount, entry.recipient_name};
       res.uri.payments.push_back(entry_spec);
