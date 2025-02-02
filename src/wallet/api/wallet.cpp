@@ -2550,7 +2550,7 @@ bool WalletImpl::checkBackgroundSync(const std::string &message) const
 
 bool WalletImpl::parse_uri(const std::string &uri, std::vector<tools::wallet2::uri_data> &data, std::string &payment_id, std::string &tx_description, std::vector<std::string> &unknown_parameters, std::string &error)
 {
-    return m_wallet->parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error)
+    return m_wallet->parse_uri(uri, data, payment_id, tx_description, unknown_parameters, error);
 }
 
 bool WalletImpl::parse_uri(const std::string& uri, std::string& address, std::string& payment_id, uint64_t& amount, std::string& tx_description, std::string& recipient_name, std::vector<std::string>& unknown_parameters, std::string& error)
