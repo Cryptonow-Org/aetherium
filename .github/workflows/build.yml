@@ -224,6 +224,7 @@ jobs:
         ${{env.CCACHE_SETTINGS}}
         ${{env.BUILD_DEFAULT_LINUX}} --parallel ${{env.MAKE_JOB_COUNT}}
         cmake --build build --target test
+        ctest -E core_tests --output-on-failure
 
 # ARCH="default" (not "native") ensures, that a different execution host can execute binaries compiled elsewhere.
 # BUILD_SHARED_LIBS=ON speeds up the linkage part a bit, reduces size, and is the only place where the dynamic linkage is tested.
