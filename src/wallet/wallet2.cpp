@@ -14945,6 +14945,34 @@ std::string wallet2::decrypt_with_view_secret_key(const std::string &ciphertext,
   return decrypt(ciphertext, get_account().get_keys().m_view_secret_key, authenticated);
 }
 //----------------------------------------------------------------------------------------------------
+std::string wallet2::custom_conver_to_url_format(const std::string &uri) const
+{
+  std::string s = conver_to_url_format(uri);
+
+  // replace '=' with "%3D" and '?' with "%3F".
+  std::string result;
+  result.reserve(s.size());
+
+  for (char c : s)
+  {
+    if (c == '=')
+    {
+      result.append("%3D");
+    }
+    else if (c == '?')
+    {
+      result.append("%3F");
+      }
+      
+    else
+    {
+      result.push_back(c);
+    }      
+  }
+
+  return result;
+}
+//----------------------------------------------------------------------------------------------------
 std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &payment_id, const std::string &tx_description, std::string &error) const
 {
   if (data.empty())
@@ -14993,7 +15021,7 @@ std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &pay
     if (!entry.recipient_name.empty())
     {
       recipients_used = true;
-      recipients += epee::net_utils::conver_to_url_format(entry.recipient_name);
+      recipients += custom_conver_to_url_format(entry.recipient_name);
     }
   }
 
@@ -15013,7 +15041,7 @@ std::string wallet2::make_uri(std::vector<uri_data> data, const std::string &pay
 
   if (!tx_description.empty())
   {
-    uri += (n_fields++ ? "&" : "?") + std::string("tx_description=") + epee::net_utils::conver_to_url_format(tx_description);
+    uri += (n_fields++ ? "&" : "?") + std::string("tx_description=") + custom_conver_to_url_format(tx_description);
   }
 
   if (!payment_id.empty())
