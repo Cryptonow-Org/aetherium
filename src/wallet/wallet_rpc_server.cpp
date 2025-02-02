@@ -3110,7 +3110,7 @@ namespace tools
     if (!m_wallet) return not_open(er);
     std::string error;
     std::vector<tools::wallet2::uri_data> data;
-    for (tools::wallet_rpc::uri_payment &entry : req.payments)
+    for (const tools::wallet_rpc::uri_payment &entry : req.payments)
     {
       tools::wallet2::uri_data entry_data;
       entry_data.address = entry.address;
