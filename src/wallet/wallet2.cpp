@@ -14947,7 +14947,7 @@ std::string wallet2::decrypt_with_view_secret_key(const std::string &ciphertext,
 //----------------------------------------------------------------------------------------------------
 std::string wallet2::custom_conver_to_url_format(const std::string &uri) const
 {
-  std::string s = conver_to_url_format(uri);
+  std::string s = epee::net_utils::conver_to_url_format(uri);
 
   // replace '=' with "%3D" and '?' with "%3F".
   std::string result;
