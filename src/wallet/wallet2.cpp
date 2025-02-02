@@ -6236,6 +6236,9 @@ std::string wallet2::make_background_keys_file_name(const std::string &wallet_fi
 //----------------------------------------------------------------------------------------------------
 bool wallet2::parse_long_payment_id(const std::string& payment_id_str, crypto::hash& payment_id)
 {
+  if (payment_id_str.size() != 64)
+    return false;
+
   cryptonote::blobdata payment_id_data;
   if(!epee::string_tools::parse_hexstr_to_binbuff(payment_id_str, payment_id_data))
     return false;
@@ -15127,11 +15130,6 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
     else if (kv[0] == "tx_payment_id")
     {
       // standalone payment ids are deprecated. use integrated address
-      error = "Standalone payment id deprecated, use integrated address instead";
-      return false;
-
-      /*
-      // Commenting this code to save for any unforeseen future use.
       crypto::hash hash;
       if (!wallet2::parse_long_payment_id(kv[1], hash))
       {
@@ -15139,7 +15137,12 @@ bool wallet2::parse_uri(const std::string &uri, std::vector<uri_data> &data, std
         return false;
       }
       payment_id = kv[1];
-      */
+
+      if (payment_id.length() != 16 && payment_id.length() != 64)
+      {
+        error = "Invalid payment ID length";
+        return false;
+      }
     }
     else if (kv[0] == "recipient_name")
     {
