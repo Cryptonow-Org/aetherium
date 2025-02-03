@@ -8648,7 +8648,7 @@ uint32_t wallet2::adjust_priority(uint32_t priority)
         MERROR("Bad estimated backlog array size");
         return priority;
       }
-      else if (blocks[0].first > 0)
+      else if (blocks[0].first > 1)
       {
         MINFO("We don't use the low priority because there's a backlog in the tx pool.");
         return 2;
@@ -8693,13 +8693,13 @@ uint32_t wallet2::adjust_priority(uint32_t priority)
       // estimate how 'full' the last N blocks are
       const size_t P = 100 * block_weight_sum / (N * full_reward_zone);
       MINFO((boost::format("The last %d blocks fill roughly %d%% of the full reward zone.") % N % P).str());
-      if (P > 80)
+      if (P > 80 && blocks[0].first > 0)
       {
-        MINFO("We don't use the low priority because recent blocks are quite full.");
+        MINFO("We don't use the low priority because recent blocks and tx pool are quite full.");
         return 2;
       }
       MINFO("We'll use the low priority because probably it's safe to do so.");
-      return 1;
+      return priority;
     }
     catch (const std::exception &e)
     {
