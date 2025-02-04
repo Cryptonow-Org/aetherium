@@ -8699,7 +8699,6 @@ uint32_t wallet2::adjust_priority(uint32_t priority)
         return 2;
       }
       MINFO("We'll use the low priority because probably it's safe to do so.");
-      return priority;
     }
     catch (const std::exception &e)
     {
