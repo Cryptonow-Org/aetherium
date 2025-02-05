@@ -38,8 +38,8 @@
 #include "wallet_rpc_server_commands_defs.h"
 #include "wallet2.h"
 
-#undef MONERO_DEFAULT_LOG_CATEGORY
-#define MONERO_DEFAULT_LOG_CATEGORY "wallet.rpc"
+#undef AETHERIUM_DEFAULT_LOG_CATEGORY
+#define AETHERIUM_DEFAULT_LOG_CATEGORY "wallet.rpc"
 
 namespace tools
 {

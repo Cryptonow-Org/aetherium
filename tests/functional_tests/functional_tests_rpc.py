@@ -40,7 +40,7 @@ except:
 # a main offline aetheriumd, does most of the tests
 # a restricted RPC aetheriumd setup with RPC payment
 # two local online aetheriumds connected to each other
-N_MONERODS = 5
+N_AETHERIUMDS = 5
 
 # 4 wallets connected to the main offline aetheriumd
 # 1 wallet connected to the first local online aetheriumd
@@ -75,7 +75,7 @@ processes = []
 outputs = []
 ports = []
 
-for i in range(N_MONERODS):
+for i in range(N_AETHERIUMDS):
   command_lines.append([str(18180+i) if x == "aetheriumd_rpc_port" else str(18280+i) if x == "aetheriumd_p2p_port" else str(18380+i) if x == "aetheriumd_zmq_port" else "tcp://127.0.0.1:" + str(18480+i) if x == "aetheriumd_zmq_pub" else builddir + "/functional-tests-directory/aetheriumd" + str(i) if x == "aetheriumd_data_dir" else x for x in aetheriumd_base])
   if i < len(aetheriumd_extra):
     command_lines[-1] += aetheriumd_extra[i]

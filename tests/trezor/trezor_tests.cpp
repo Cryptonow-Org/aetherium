@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
     const long mining_timeout = get_env_long("TEST_MINING_TIMEOUT", TREZOR_TEST_MINING_TIMEOUT_DEFAULT);
     const auto sync_test = get_env_long("TEST_KI_SYNC", TREZOR_TEST_KI_SYNC_DEFAULT);
     const bool env_gen_heavy = get_env_long("TEST_GEN_HEAVY", 0) > 0 || heavy_tests;
-    MINFO("Test versions " << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")");
+    MINFO("Test versions " << AETHERIUM_RELEASE_NAME << "' (v" << AETHERIUM_VERSION_FULL << ")");
     MINFO("Testing hardforks [" << (int)initial_hf << ", " << (int)max_hf << "], sync-test: " << sync_test);
 
     cryptonote::core core_obj(nullptr);

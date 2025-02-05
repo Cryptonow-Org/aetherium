@@ -41,8 +41,8 @@
 
 using namespace epee;
 
-#undef MONERO_DEFAULT_LOG_CATEGORY
-#define MONERO_DEFAULT_LOG_CATEGORY "checkpoints"
+#undef AETHERIUM_DEFAULT_LOG_CATEGORY
+#define AETHERIUM_DEFAULT_LOG_CATEGORY "checkpoints"
 
 namespace cryptonote
 {

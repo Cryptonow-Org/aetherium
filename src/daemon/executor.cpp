@@ -35,8 +35,8 @@
 
 #include <string>
 
-#undef MONERO_DEFAULT_LOG_CATEGORY
-#define MONERO_DEFAULT_LOG_CATEGORY "daemon"
+#undef AETHERIUM_DEFAULT_LOG_CATEGORY
+#define AETHERIUM_DEFAULT_LOG_CATEGORY "daemon"
 
 namespace daemonize
 {
@@ -58,7 +58,7 @@ namespace daemonize
       boost::program_options::variables_map const & vm
     )
   {
-    LOG_PRINT_L0("Aetherium '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ") Daemonised");
+    LOG_PRINT_L0("Aetherium '" << AETHERIUM_RELEASE_NAME << "' (v" << AETHERIUM_VERSION_FULL << ") Daemonised");
     return t_daemon{vm, public_rpc_port};
   }
 

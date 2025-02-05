@@ -32,8 +32,8 @@
 #include "misc_log_ex.h"
 #include "keyvalue_serialization_overloads.h"
 
-#undef MONERO_DEFAULT_LOG_CATEGORY
-#define MONERO_DEFAULT_LOG_CATEGORY "serialization"
+#undef AETHERIUM_DEFAULT_LOG_CATEGORY
+#define AETHERIUM_DEFAULT_LOG_CATEGORY "serialization"
 
 namespace epee
 {

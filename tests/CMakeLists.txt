@@ -28,7 +28,7 @@
 # 
 # Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
-set(MONERO_WALLET_CRYPTO_BENCH "auto" CACHE STRING "Select wallet crypto libraries for benchmarking")
+set(AETHERIUM_WALLET_CRYPTO_BENCH "auto" CACHE STRING "Select wallet crypto libraries for benchmarking")
 
 # The docs say this only affects grouping in IDEs
 set(folder "tests")
@@ -94,32 +94,32 @@ add_test(
 #
 # Configure wallet crypto benchmark
 #
-if (${MONERO_WALLET_CRYPTO_BENCH} STREQUAL "auto")
-  set(MONERO_WALLET_CRYPTO_BENCH "cn")
+if (${AETHERIUM_WALLET_CRYPTO_BENCH} STREQUAL "auto")
+  set(AETHERIUM_WALLET_CRYPTO_BENCH "cn")
   aetherium_crypto_autodetect(AVAILABLE BEST)
   if (DEFINED AVAILABLE)
-    list(APPEND MONERO_WALLET_CRYPTO_BENCH ${AVAILABLE})
+    list(APPEND AETHERIUM_WALLET_CRYPTO_BENCH ${AVAILABLE})
   endif ()
-  message("Wallet crypto bench is using ${MONERO_WALLET_CRYPTO_BENCH}")
+  message("Wallet crypto bench is using ${AETHERIUM_WALLET_CRYPTO_BENCH}")
 endif ()
 
-list(REMOVE_DUPLICATES MONERO_WALLET_CRYPTO_BENCH)
-list(REMOVE_ITEM MONERO_WALLET_CRYPTO_BENCH "cn") # always used for comparison
-set(MONERO_WALLET_CRYPTO_BENCH_NAMES "(cn)")
-foreach(BENCH IN LISTS MONERO_WALLET_CRYPTO_BENCH)
+list(REMOVE_DUPLICATES AETHERIUM_WALLET_CRYPTO_BENCH)
+list(REMOVE_ITEM AETHERIUM_WALLET_CRYPTO_BENCH "cn") # always used for comparison
+set(AETHERIUM_WALLET_CRYPTO_BENCH_NAMES "(cn)")
+foreach(BENCH IN LISTS AETHERIUM_WALLET_CRYPTO_BENCH)
   aetherium_crypto_valid(${BENCH} VALID)
   if (NOT VALID)
-    message(FATAL_ERROR "Invalid MONERO_WALLET_CRYPTO_BENCH option ${BENCH}")
+    message(FATAL_ERROR "Invalid AETHERIUM_WALLET_CRYPTO_BENCH option ${BENCH}")
   endif ()
 
   aetherium_crypto_get_target(${BENCH} BENCH_LIBRARY)
   list(APPEND BENCH_OBJECTS $<TARGET_OBJECTS:${BENCH_LIBRARY}>)
 
   aetherium_crypto_get_namespace(${BENCH} BENCH_NAMESPACE)
-  set(MONERO_WALLET_CRYPTO_BENCH_NAMES "${MONERO_WALLET_CRYPTO_BENCH_NAMES}(${BENCH_NAMESPACE})")
+  set(AETHERIUM_WALLET_CRYPTO_BENCH_NAMES "${AETHERIUM_WALLET_CRYPTO_BENCH_NAMES}(${BENCH_NAMESPACE})")
 endforeach ()
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/benchmark.h.in" "${MONERO_GENERATED_HEADERS_DIR}/tests/benchmark.h")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/benchmark.h.in" "${AETHERIUM_GENERATED_HEADERS_DIR}/tests/benchmark.h")
 aetherium_add_minimal_executable(aetherium-wallet-crypto-bench benchmark.cpp ${BENCH_OBJECTS})
 target_link_libraries(aetherium-wallet-crypto-bench cncrypto)
 

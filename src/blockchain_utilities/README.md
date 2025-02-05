@@ -14,13 +14,13 @@ See also each utility's "--help" option.
 
 `$ aetherium-blockchain-export`
 
-This loads the existing blockchain and exports it to `$MONERO_DATA_DIR/export/blockchain.raw`
+This loads the existing blockchain and exports it to `$AETHERIUM_DATA_DIR/export/blockchain.raw`
 
 ### Import the exported file
 
 `$ aetherium-blockchain-import`
 
-This imports blocks from `$MONERO_DATA_DIR/export/blockchain.raw` (exported using the
+This imports blocks from `$AETHERIUM_DATA_DIR/export/blockchain.raw` (exported using the
 `aetherium-blockchain-export` tool as described above) into the current database.
 
 Defaults: `--batch on`, `--batch size 20000`, `--verify on`

@@ -90,9 +90,9 @@ echo_err "Creating devices using temporary directory: $tmpdir"
 dev_rot=$(create_device "$tmpdir")
 bdev_rot=$(block_device_path "$dev_rot")
 echo 1 | root_exec tee "$bdev_rot/queue/rotational" >/dev/null
-echo MONERO_TEST_DEVICE_HDD=$(device_mountpoint "$tmpdir" "$dev_rot")
+echo AETHERIUM_TEST_DEVICE_HDD=$(device_mountpoint "$tmpdir" "$dev_rot")
 
 dev_ssd=$(create_device "$tmpdir")
 bdev_ssd=$(block_device_path "$dev_ssd")
 echo 0 | root_exec tee "$bdev_ssd/queue/rotational" >/dev/null
-echo MONERO_TEST_DEVICE_SSD=$(device_mountpoint "$tmpdir" "$dev_ssd")
+echo AETHERIUM_TEST_DEVICE_SSD=$(device_mountpoint "$tmpdir" "$dev_ssd")
