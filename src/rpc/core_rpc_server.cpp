@@ -163,6 +163,8 @@ namespace cryptonote
     command_line::add_arg(desc, arg_rpc_payment_difficulty);
     command_line::add_arg(desc, arg_rpc_payment_credits);
     command_line::add_arg(desc, arg_rpc_payment_allow_free_loopback);
+    command_line::add_arg(desc, arg_rpc_max_ip_connections);
+    command_line::add_arg(desc, arg_rpc_response_soft_limit);
   }
   //------------------------------------------------------------------------------------------------------------------------------
   core_rpc_server::core_rpc_server(
@@ -400,7 +402,9 @@ namespace cryptonote
     const bool inited = epee::http_server_impl_base<core_rpc_server, connection_context>::init(
       rng, std::move(port), std::move(bind_ip_str),
       std::move(bind_ipv6_str), std::move(rpc_config->use_ipv6), std::move(rpc_config->require_ipv4),
-      std::move(rpc_config->access_control_origins), std::move(http_login), std::move(rpc_config->ssl_options)
+      std::move(rpc_config->access_control_origins), std::move(http_login), std::move(rpc_config->ssl_options),
+      command_line::get_arg(vm, arg_rpc_max_ip_connections),
+      command_line::get_arg(vm, arg_rpc_response_soft_limit)
     );
 
     m_net_server.get_config_object().m_max_content_length = MAX_RPC_CONTENT_LENGTH;
@@ -3885,4 +3889,16 @@ namespace cryptonote
     , "Allow free access from the loopback address (ie, the local host)"
     , false
     };
+
+  const command_line::arg_descriptor<std::size_t> core_rpc_server::arg_rpc_max_ip_connections = {
+      "rpc-max-ip-connections"
+    , "Max RPC connections per IP permitted"
+    , 3
+  };
+
+  const command_line::arg_descriptor<std::size_t> core_rpc_server::arg_rpc_response_soft_limit = {
+      "rpc-response-soft-limit"
+    , "Max response bytes that can be queued, enforced at next response attempt"
+    , 25 * 1024 * 1024
+  };
 }  // namespace cryptonote
