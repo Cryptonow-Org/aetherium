@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2024, Monero Research Labs
+// Copyright (c) 2016-2024, Aetherium Research Labs
 //
 // Author: Shen Noether <shen.noether@gmx.com>
 // 

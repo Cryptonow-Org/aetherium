@@ -1,8 +1,8 @@
 /// @file
-/// @author rfree (current maintainer in monero.cc project)
+/// @author rfree (current maintainer in aetherium.cc project)
 /// @brief base for connection, contains e.g. the ratelimit hooks
 
-// Copyright (c) 2014-2024, The Monero Project
+// Copyright (c) 2014-2024, The Aetherium Project
 // 
 // All rights reserved.
 // 

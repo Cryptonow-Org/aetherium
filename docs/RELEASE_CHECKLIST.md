@@ -1,25 +1,25 @@
-# Monero hard-fork release check-list
+# Aetherium hard-fork release check-list
 
 - [ ] Security audit
 - [ ] Code audit
 - [ ] Ledger integration
   - [ ] Ledger notified
-  - [ ] Pull request made against Monero codebase (if needed)
-  - [ ] Pull request merged into Monero codebase (if needed)
+  - [ ] Pull request made against Aetherium codebase (if needed)
+  - [ ] Pull request merged into Aetherium codebase (if needed)
   - [ ] Ledger app integration coded
-  - [ ] Ledger Monero app update available
+  - [ ] Ledger Aetherium app update available
 - [ ] Trezor integration
   - [ ] Trezor notified
-  - [ ] Pull request made against Monero codebase (if needed)
-  - [ ] Pull request merged into Monero codebase (if needed)
+  - [ ] Pull request made against Aetherium codebase (if needed)
+  - [ ] Pull request merged into Aetherium codebase (if needed)
   - [ ] Trezor firmware update coded
   - [ ] Trezor firmware update available
 - [ ] Fork height set
   - [ ] Twitter announcement
   - [ ] Reddit announcement
-  - [ ] Getmonero.org announcement
+  - [ ] Getaetherium.org announcement
 - [ ] Notify wallets
-  - [ ] MyMonero
+  - [ ] MyAetherium
   - [ ] Coinomi
   - [ ] Exa Wallet
   - [ ] Wookey Wallet
@@ -30,20 +30,20 @@
   - [ ] Monerujo
   - [ ] Edge Wallet
   - [ ] Exodus
-  - [ ] XMRWallet
+  - [ ] ATHWallet
   - [ ] Feather Wallet
 - [ ] Notify exchanges
-  - [ ] https://www.getmonero.org/community/merchants/#exchanges
+  - [ ] https://www.getaetherium.org/community/merchants/#exchanges
 - [ ] Notify 3rd party payment processors
-  - [ ] https://www.getmonero.org/community/merchants/#payment-gateways
+  - [ ] https://www.getaetherium.org/community/merchants/#payment-gateways
   - [ ] BTCPayServer
 - [ ] Notify mining pools
-  - [ ] https://miningpoolstats.stream/monero
+  - [ ] https://miningpoolstats.stream/aetherium
 - [ ] Release branch created
   - [ ] Update src/version.cpp.in with new version AND new name (if necessary)
-  - [ ] Update README.md with new fork table entry (or at least update the Recommended Monero version)
+  - [ ] Update README.md with new fork table entry (or at least update the Recommended Aetherium version)
   - [ ] Update src/checkpoints/checkpoints.cpp with a recent hardcoded checkpoint
-  - [ ] Update src/blocks/checkpoints.dat with ./monero-blockchain-export --output-file checkpoints.dat --block-stop <recent block height> --blocksdat
+  - [ ] Update src/blocks/checkpoints.dat with ./aetherium-blockchain-export --output-file checkpoints.dat --block-stop <recent block height> --blocksdat
   - [ ] Update expected_block_hashes_hash in src/cryptonote_core/blockchain.cpp with checkpoints.dat sha256 hash
 - [ ] Testnet forked
 - [ ] Testnet testing/verification
@@ -58,21 +58,21 @@
   - [ ] Release-specific testing
 - [ ] CLI reproducible builds validated
 - [ ] CLI released
-  - [ ] https://www.getmonero.org/downloads/ updated
+  - [ ] https://www.getaetherium.org/downloads/ updated
   - [ ] Update hashes.txt on website
   - [ ] Update downloads.yml on website
   - [ ] Update auto-update DNS records
   - [ ] Update redirects on downloads box
   - [ ] Update seed nodes
 - [ ] GUI released
-  - [ ] https://www.getmonero.org/downloads/ updated
+  - [ ] https://www.getaetherium.org/downloads/ updated
   - [ ] Update hashes.txt on website
   - [ ] Update hashes.txt.sig on website
   - [ ] Update downloads.yml on website
   - [ ] Update auto-update DNS records
   - [ ] Update redirects on downloads box
 - [ ] Release Announcements
-  - [ ] Monero-announce mailer notice
+  - [ ] Aetherium-announce mailer notice
   - [ ] Twitter announcement
   - [ ] Reddit announcement
-  - [ ] Getmonero.org announcement
+  - [ ] Getaetherium.org announcement

@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2024, The Monero Project
+// Copyright (c) 2017-2024, The Aetherium Project
 //
 // All rights reserved.
 //
@@ -226,9 +226,9 @@ namespace trezor {
         }
 
         if (network_type){
-          msg->set_network_type(static_cast<messages::monero::MoneroNetworkType>(network_type.get()));
+          msg->set_network_type(static_cast<messages::aetherium::AetheriumNetworkType>(network_type.get()));
         } else {
-          msg->set_network_type(static_cast<messages::monero::MoneroNetworkType>(this->m_network_type));
+          msg->set_network_type(static_cast<messages::aetherium::AetheriumNetworkType>(this->m_network_type));
         }
       }
 
@@ -244,7 +244,7 @@ namespace trezor {
 
     bool reset();
 
-    // Default derivation path for Monero
+    // Default derivation path for Aetherium
     static const uint32_t DEFAULT_BIP44_PATH[2];
 
     std::shared_ptr<Transport> get_transport(){

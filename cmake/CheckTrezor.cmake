@@ -121,7 +121,7 @@ if(Protobuf_FOUND AND USE_DEVICE_TREZOR)
     set(_proto_files "messages.proto"
                      "messages-common.proto"
                      "messages-management.proto"
-                     "messages-monero.proto")
+                     "messages-aetherium.proto")
     if (TREZOR_DEBUG)
         list(APPEND _proto_files "messages-debug.proto")
     endif ()
@@ -141,11 +141,11 @@ if(Protobuf_FOUND AND USE_DEVICE_TREZOR)
     if(FREEBSD)
         # FreeBSD defines `minor` in usr/include/sys/types.h which conflicts with this file
         # https://github.com/trezor/trezor-firmware/issues/4460
-        file(READ "${_proto_out_dir}/messages-monero.pb.h" file_content)
+        file(READ "${_proto_out_dir}/messages-aetherium.pb.h" file_content)
         string(REPLACE "// @@protoc_insertion_point(includes)"
                        "// @@protoc_insertion_point(includes)\n#ifdef minor\n#undef minor\n#endif"
                 updated_content "${file_content}")
-        file(WRITE "${_proto_out_dir}/messages-monero.pb.h" "${updated_content}")
+        file(WRITE "${_proto_out_dir}/messages-aetherium.pb.h" "${updated_content}")
     endif()
 
     message(STATUS "Trezor: protobuf messages regenerated out.")

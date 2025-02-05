@@ -1,16 +1,16 @@
 [Unit]
-Description=Monero Full Node
+Description=Aetherium Full Node
 After=network-online.target
 
 [Service]
-User=monero
-Group=monero
+User=aetherium
+Group=aetherium
 WorkingDirectory=~
-StateDirectory=monero
-LogsDirectory=monero
+StateDirectory=aetherium
+LogsDirectory=aetherium
 
 Type=simple
-ExecStart=/usr/bin/monerod --config-file /etc/monerod.conf --non-interactive
+ExecStart=/usr/bin/aetheriumd --config-file /etc/aetheriumd.conf --non-interactive
 StandardOutput=null
 StandardError=null
 

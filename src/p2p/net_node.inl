@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2024, The Monero Project
+// Copyright (c) 2014-2024, The Aetherium Project
 //
 // All rights reserved.
 //
@@ -2057,13 +2057,13 @@ namespace nodetool
       return true;
 
     static const std::vector<std::string> dns_urls = {
-      "blocklist.moneropulse.se"
-    , "blocklist.moneropulse.org"
-    , "blocklist.moneropulse.net"
-    , "blocklist.moneropulse.no"
-    , "blocklist.moneropulse.fr"
-    , "blocklist.moneropulse.de"
-    , "blocklist.moneropulse.ch"
+      "blocklist.aetheriumpulse.se"
+    , "blocklist.aetheriumpulse.org"
+    , "blocklist.aetheriumpulse.net"
+    , "blocklist.aetheriumpulse.no"
+    , "blocklist.aetheriumpulse.fr"
+    , "blocklist.aetheriumpulse.de"
+    , "blocklist.aetheriumpulse.ch"
     };
 
     std::vector<std::string> records;

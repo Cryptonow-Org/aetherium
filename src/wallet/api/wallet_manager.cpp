@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2024, The Monero Project
+// Copyright (c) 2014-2024, The Aetherium Project
 //
 // All rights reserved.
 //
@@ -47,7 +47,7 @@ namespace epee {
     unsigned int g_test_dbg_lock_sleep = 0;
 }
 
-namespace Monero {
+namespace Aetherium {
 
 WalletManagerImpl::WalletManagerImpl()
 {

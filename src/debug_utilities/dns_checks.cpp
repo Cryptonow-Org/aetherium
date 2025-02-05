@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024, The Monero Project
+// Copyright (c) 2019-2024, The Aetherium Project
 //
 // All rights reserved.
 //
@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 
   if (command_line::get_arg(vm, command_line::arg_help))
   {
-    std::cout << "Monero '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")" << ENDL << ENDL;
+    std::cout << "Aetherium '" << MONERO_RELEASE_NAME << "' (v" << MONERO_VERSION_FULL << ")" << ENDL << ENDL;
     std::cout << desc_options << std::endl;
     return 1;
   }
@@ -129,20 +129,20 @@ int main(int argc, char* argv[])
   mlog_configure("", true);
   mlog_set_categories("+" MONERO_DEFAULT_LOG_CATEGORY ":INFO");
 
-  lookup(LOOKUP_A, {"seeds.moneroseeds.se", "seeds.moneroseeds.ae.org", "seeds.moneroseeds.ch", "seeds.moneroseeds.li"});
+  lookup(LOOKUP_A, {"seeds.aetheriumseeds.se", "seeds.aetheriumseeds.ae.org", "seeds.aetheriumseeds.ch", "seeds.aetheriumseeds.li"});
 
-  lookup(LOOKUP_TXT, {"updates.moneropulse.org", "updates.moneropulse.net", "updates.moneropulse.co", "updates.moneropulse.se", "updates.moneropulse.fr", "updates.moneropulse.de", "updates.moneropulse.no", "updates.moneropulse.ch"});
+  lookup(LOOKUP_TXT, {"updates.aetheriumpulse.org", "updates.aetheriumpulse.net", "updates.aetheriumpulse.co", "updates.aetheriumpulse.se", "updates.aetheriumpulse.fr", "updates.aetheriumpulse.de", "updates.aetheriumpulse.no", "updates.aetheriumpulse.ch"});
 
-  lookup(LOOKUP_TXT, {"checkpoints.moneropulse.org", "checkpoints.moneropulse.net", "checkpoints.moneropulse.co", "checkpoints.moneropulse.se"});
+  lookup(LOOKUP_TXT, {"checkpoints.aetheriumpulse.org", "checkpoints.aetheriumpulse.net", "checkpoints.aetheriumpulse.co", "checkpoints.aetheriumpulse.se"});
 
   // those are in the code, but don't seem to actually exist
 #if 0
-  lookup(LOOKUP_TXT, {"testpoints.moneropulse.org", "testpoints.moneropulse.net", "testpoints.moneropulse.co", "testpoints.moneropulse.se");
+  lookup(LOOKUP_TXT, {"testpoints.aetheriumpulse.org", "testpoints.aetheriumpulse.net", "testpoints.aetheriumpulse.co", "testpoints.aetheriumpulse.se");
 
-  lookup(LOOKUP_TXT, {"stagenetpoints.moneropulse.org", "stagenetpoints.moneropulse.net", "stagenetpoints.moneropulse.co", "stagenetpoints.moneropulse.se"});
+  lookup(LOOKUP_TXT, {"stagenetpoints.aetheriumpulse.org", "stagenetpoints.aetheriumpulse.net", "stagenetpoints.aetheriumpulse.co", "stagenetpoints.aetheriumpulse.se"});
 #endif
 
-  lookup(LOOKUP_TXT, {"segheights.moneropulse.org", "segheights.moneropulse.net", "segheights.moneropulse.co", "segheights.moneropulse.se"});
+  lookup(LOOKUP_TXT, {"segheights.aetheriumpulse.org", "segheights.aetheriumpulse.net", "segheights.aetheriumpulse.co", "segheights.aetheriumpulse.se"});
 
   return 0;
   CATCH_ENTRY_L0("main", 1);

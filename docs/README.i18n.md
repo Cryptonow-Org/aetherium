@@ -1,9 +1,9 @@
-Monero daemon internationalization
+Aetherium daemon internationalization
 ==================================
 
-The Monero command line tools can be translated in various languages. If you wish to contribute and need help/support, contact the [Monero Localization Workgroup on Taiga](https://taiga.getmonero.org/project/erciccione-monero-localization/) or come chat on `#monero-translations` (Libera/IRC, riot/matrix, MatterMost)
+The Aetherium command line tools can be translated in various languages. If you wish to contribute and need help/support, contact the [Aetherium Localization Workgroup on Taiga](https://taiga.getaetherium.org/project/erciccione-aetherium-localization/) or come chat on `#aetherium-translations` (Libera/IRC, riot/matrix, MatterMost)
 
-In order to use the same translation workflow as the [Monero Core GUI](https://github.com/monero-project/monero-gui), they use Qt Linguist translation files.  However, to avoid the dependencies on Qt this normally implies, they use a custom loader to read those files at runtime.
+In order to use the same translation workflow as the [Aetherium Core GUI](https://github.com/aetherium-project/aetherium-gui), they use Qt Linguist translation files.  However, to avoid the dependencies on Qt this normally implies, they use a custom loader to read those files at runtime.
 
 ### Tools for translators
 
@@ -22,13 +22,13 @@ To update ts files after changing source code:
 To add a new language, eg Spanish (ISO code es):
 
 ```bash
-cp translations/monero.ts translations/monero_es.ts
+cp translations/aetherium.ts translations/aetherium_es.ts
 ```
 
 To edit translations for Spanish:
 
 ```bash
-linguist translations/monero_es.ts
+linguist translations/aetherium_es.ts
 ```
 
 To build translations after modifying them:
@@ -40,7 +40,7 @@ To build translations after modifying them:
 To test a translation:
 
 ```bash
-LANG=es ./build/release/bin/monero-wallet-cli
+LANG=es ./build/release/bin/aetherium-wallet-cli
 ```
 
 To add new translatable strings in the source code:

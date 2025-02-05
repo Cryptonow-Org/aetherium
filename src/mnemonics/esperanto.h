@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2024, The Monero Project
+// Copyright (c) 2014-2024, The Aetherium Project
 // 
 // All rights reserved.
 // 
@@ -1097,7 +1097,7 @@ namespace Language
       "mokadi",
       "molaro",
       "momento",
-      "monero",
+      "aetherium",
       "mopso",
       "mordi",
       "moskito",

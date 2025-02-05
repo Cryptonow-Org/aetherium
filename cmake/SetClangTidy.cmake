@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2024, The Monero Project
+# Copyright (c) 2014-2024, The Aetherium Project
 #
 # All rights reserved.
 #
@@ -33,7 +33,7 @@
 # when clang-tidy is found in PATH. Afterwards, the code is being linted by the tool.
 # The checks to be enabled can be manipulated with the variable MONERO_CLANG_TIDY_CHECKS
 
-macro (monero_clang_tidy LANGUAGE)
+macro (aetherium_clang_tidy LANGUAGE)
 	set(TOOL_NAME "clang-tidy")
 	set(MONERO_CLANG_TIDY_MIN_VERSION "3.6")
 	if(${CMAKE_VERSION} VERSION_LESS "${MONERO_CLANG_TIDY_MIN_VERSION}")

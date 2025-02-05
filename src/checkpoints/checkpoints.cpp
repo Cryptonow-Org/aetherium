@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2024, The Monero Project
+// Copyright (c) 2014-2024, The Aetherium Project
 //
 // All rights reserved.
 //
@@ -294,23 +294,23 @@ namespace cryptonote
   {
     std::vector<std::string> records;
 
-    // All four MoneroPulse domains have DNSSEC on and valid
-    static const std::vector<std::string> dns_urls = { "checkpoints.moneropulse.se"
-						     , "checkpoints.moneropulse.org"
-						     , "checkpoints.moneropulse.net"
-						     , "checkpoints.moneropulse.co"
+    // All four AetheriumPulse domains have DNSSEC on and valid
+    static const std::vector<std::string> dns_urls = { "checkpoints.aetheriumpulse.se"
+						     , "checkpoints.aetheriumpulse.org"
+						     , "checkpoints.aetheriumpulse.net"
+						     , "checkpoints.aetheriumpulse.co"
     };
 
-    static const std::vector<std::string> testnet_dns_urls = { "testpoints.moneropulse.se"
-							     , "testpoints.moneropulse.org"
-							     , "testpoints.moneropulse.net"
-							     , "testpoints.moneropulse.co"
+    static const std::vector<std::string> testnet_dns_urls = { "testpoints.aetheriumpulse.se"
+							     , "testpoints.aetheriumpulse.org"
+							     , "testpoints.aetheriumpulse.net"
+							     , "testpoints.aetheriumpulse.co"
     };
 
-    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.moneropulse.se"
-                   , "stagenetpoints.moneropulse.org"
-                   , "stagenetpoints.moneropulse.net"
-                   , "stagenetpoints.moneropulse.co"
+    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.aetheriumpulse.se"
+                   , "stagenetpoints.aetheriumpulse.org"
+                   , "stagenetpoints.aetheriumpulse.net"
+                   , "stagenetpoints.aetheriumpulse.co"
     };
 
     if (!tools::dns_utils::load_txt_records_from_dns(records, nettype == TESTNET ? testnet_dns_urls : nettype == STAGENET ? stagenet_dns_urls : dns_urls))

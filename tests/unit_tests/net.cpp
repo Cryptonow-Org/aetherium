@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2024, The Monero Project
+// Copyright (c) 2018-2024, The Aetherium Project
 
 //
 // All rights reserved.
@@ -879,7 +879,7 @@ TEST(get_network_address_host_and_port, ipv6)
 TEST(get_network_address_host_and_port, hostname)
 {
     na_host_and_port_test("localhost", "localhost", "xxxxx");
-    na_host_and_port_test("bar:29080", "bar", "29080"); // Issue https://github.com/monero-project/monero/issues/8633
+    na_host_and_port_test("bar:29080", "bar", "29080"); // Issue https://github.com/aetherium-project/aetherium/issues/8633
     na_host_and_port_test("xmrchain.net:18081", "xmrchain.net", "18081");
 }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2024, The Monero Project
+// Copyright (c) 2017-2024, The Aetherium Project
 // 
 // All rights reserved.
 // 
@@ -31,7 +31,7 @@
 // Preprint: https://eprint.iacr.org/2020/735, version 17 Jun 2020
 //
 // NOTE ON NOTATION:
-//  In the signature constructions used in Monero, commitments to zero are treated as
+//  In the signature constructions used in Aetherium, commitments to zero are treated as
 //      public keys against the curve group generator `G`. This means that amount
 //      commitments must use another generator `H` for values in order to show balance.
 //  The result is that the roles of `g` and `h` in the preprint are effectively swapped

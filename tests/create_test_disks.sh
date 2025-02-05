@@ -84,7 +84,7 @@ block_device_path() {
     echo "/sys/dev/block/$LOOP_DEVICE_MAJOR:$device_minor"
 }
 
-tmpdir=$(mktemp --tmpdir -d monerotest.XXXXXXXX)
+tmpdir=$(mktemp --tmpdir -d aetheriumtest.XXXXXXXX)
 echo_err "Creating devices using temporary directory: $tmpdir"
 
 dev_rot=$(create_device "$tmpdir")

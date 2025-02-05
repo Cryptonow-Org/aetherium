@@ -1,21 +1,21 @@
 # Trezor hardware wallet support
 
-This module adds [Trezor] hardware support to Monero.
+This module adds [Trezor] hardware support to Aetherium.
 
 
 ## Basic information
 
-Trezor integration is based on the following original proposal: https://github.com/ph4r05/monero-trezor-doc
+Trezor integration is based on the following original proposal: https://github.com/ph4r05/aetherium-trezor-doc
 
 A custom high-level transaction signing protocol uses Trezor in a similar way a cold wallet is used. 
 Transaction is build incrementally on the device. 
 
-Trezor implements the signing protocol in [trezor-firmware] repository, in the [monero](https://github.com/trezor/trezor-firmware/tree/master/core/src/apps/monero) application.
-Please, refer to [monero readme](https://github.com/trezor/trezor-firmware/blob/master/core/src/apps/monero/README.md) for more information.
+Trezor implements the signing protocol in [trezor-firmware] repository, in the [aetherium](https://github.com/trezor/trezor-firmware/tree/master/core/src/apps/aetherium) application.
+Please, refer to [aetherium readme](https://github.com/trezor/trezor-firmware/blob/master/core/src/apps/aetherium/README.md) for more information.
 
 ## Dependencies
 
-Trezor uses [Protobuf](https://protobuf.dev/) library. Monero is now compiled with C++ 17 by default.
+Trezor uses [Protobuf](https://protobuf.dev/) library. Aetherium is now compiled with C++ 17 by default.
 Protobuf v21 is tested, older versions are not guaranteed to work. Note that Protobuf v23+ requires C++ 17.
 
 If you are getting Trezor compilation errors, it may be caused by abseil (protobuf dependency) not being compiled with C++17.
@@ -29,11 +29,11 @@ cmake --build .
 sudo make install
 ```
 
-If Monero is compiled with C++14, Protobuf v21 is the latest compatible protobuf version for C++ 14.
-If you want to compile Monero with Trezor support with C++14, please make sure the Protobuf v21 is installed.
+If Aetherium is compiled with C++14, Protobuf v21 is the latest compatible protobuf version for C++ 14.
+If you want to compile Aetherium with Trezor support with C++14, please make sure the Protobuf v21 is installed.
 
-More about this limitation: [PR #8752](https://github.com/monero-project/monero/pull/8752), 
-[1](https://github.com/monero-project/monero/pull/8752#discussion_r1246174755), [2](https://github.com/monero-project/monero/pull/8752#discussion_r1246480393)
+More about this limitation: [PR #8752](https://github.com/aetherium-project/aetherium/pull/8752), 
+[1](https://github.com/aetherium-project/aetherium/pull/8752#discussion_r1246174755), [2](https://github.com/aetherium-project/aetherium/pull/8752#discussion_r1246480393)
 
 ### OSX
 
@@ -76,9 +76,9 @@ USE_DEVICE_TREZOR=OFF make release
 
 ## Resources:
 
-- First pull request https://github.com/monero-project/monero/pull/4241
-- Integration proposal https://github.com/ph4r05/monero-trezor-doc
-- Integration readme in trezor-firmware https://github.com/trezor/trezor-firmware/blob/master/core/src/apps/monero/README.md
+- First pull request https://github.com/aetherium-project/aetherium/pull/4241
+- Integration proposal https://github.com/ph4r05/aetherium-trezor-doc
+- Integration readme in trezor-firmware https://github.com/trezor/trezor-firmware/blob/master/core/src/apps/aetherium/README.md
 
 [Trezor]: https://trezor.io/
 [trezor-firmware]: https://github.com/trezor/trezor-firmware/
